@@ -44,11 +44,18 @@ def main():
     parser.add_argument(dest="filenames", metavar="filename", nargs="*")
 
     args = parser.parse_args()
-    
+
     if not args.filenames:
-        parser.error("Please provide a video file path")
-    
-    splitter(args.filenames[0])
+        parser.error("No file reference provided. Please provide a video file path.")
+
+    file_path = args.filenames[0]
+
+    if not file_path:
+        parser.error(
+            "No file reference provided. Please provide a valid video file path."
+        )
+
+    splitter(file_path)
 
 
 if __name__ == "__main__":

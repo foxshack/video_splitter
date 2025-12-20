@@ -35,7 +35,7 @@ video-splitter my_video.mp4
 
 ## Requirements
 
-- Python 3.8 or higher
+- Python 3.9 or higher
 - opencv-python
 
 ## Development

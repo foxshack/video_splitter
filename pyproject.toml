@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "video-splitter"
-version = "0.1.0"
+version = "0.2.0"
 description = "A CLI tool to split videos into individual frames"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "Mike Horrocks", email = "mike.horrocks@hotmail.co.uk"}
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
