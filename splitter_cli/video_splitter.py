@@ -1,6 +1,7 @@
-import cv2
 import argparse
 import os
+
+import cv2
 
 
 def video_splitter(filename, directory):
@@ -10,8 +11,7 @@ def video_splitter(filename, directory):
 
     count = 0
     while success:
-
-        new_file = os.path.join(directory, "frame%d.jpg" % count)
+        new_file = os.path.join(directory, f"frame{count}.jpg")
 
         cv2.imwrite(new_file, image)
         success, image = vidcap.read()
@@ -28,7 +28,6 @@ def create_file_path(path):
 
 
 def splitter(path):
-
     if os.path.exists(path):
         dir = create_file_path(path)
 
@@ -51,9 +50,7 @@ def main():
     file_path = args.filenames[0]
 
     if not file_path:
-        parser.error(
-            "No file reference provided. Please provide a valid video file path."
-        )
+        parser.error("No file reference provided. Please provide a valid video file path.")
 
     splitter(file_path)
 

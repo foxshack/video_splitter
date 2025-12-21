@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "video-splitter"
-version = "0.2.1"
+version = "0.2.2"
 description = "A CLI tool to split videos into individual frames"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -32,3 +32,26 @@ video-splitter = "splitter_cli.video_splitter:main"
 [project.urls]
 Homepage = "https://github.com/mikeh74/video_splitter"
 Repository = "https://github.com/mikeh74/video_splitter.git"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "I",     # isort
+    "N",     # pep8-naming
+    "B",     # flake8-bugbear
+    "C4",    # flake8-comprehensions
+    "SIM",   # flake8-simplify
+    "UP",    # pyupgrade
+    # "PTH",   # flake8-use-pathlib
+]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
