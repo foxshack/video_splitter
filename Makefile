@@ -1,3 +1,9 @@
+# Constants
+VENV_NAME ?= .venv
+PYTHON_ENV_PATH := $(or $(VIRTUAL_ENV), $(VENV_NAME))
+PRECOMMIT = $(PYTHON_ENV_PATH)/bin/pre-commit
+
+# Targets
 .PHONY: help install-precommit uninstall-precommit update-precommit precommit precommit-all
 
 help:
@@ -8,15 +14,30 @@ help:
 	@echo "  make precommit            - Run pre-commit on staged files"
 	@echo "  make precommit-all        - Run pre-commit on all files"
 
-install-precommit:
-	pip install pre-commit
-	pre-commit install
+pip_env:
+	@# check if PYTHON_ENV = $(VENV_NAME) and if it is then check whether the directory exists
+	@-echo "PYTHON_ENV is set to $(PYTHON_ENV_PATH)";
+	@-if [ "$(PYTHON_ENV_PATH)" = $(VENV_NAME) ]; then \
+		if [ ! -d "$(PYTHON_ENV_PATH)" ]; then \
+			echo "Virtual environment created."; \
+			python3 -m venv $(VENV_NAME) && $(VENV_NAME)/bin/pip install --upgrade pip; \
+		fi; \
+	fi
 
-uninstall-precommit:
-	pre-commit uninstall
+install-precommit: pip_env
+	@$(PYTHON_ENV_PATH)/bin/pip install pre-commit
+	@$(PYTHON_ENV_PATH)/bin/pre-commit install
+	@echo "Pre-commit installed"
 
-update-precommit:
-	pre-commit autoupdate
+uninstall-precommit: pip_env
+	@$(PYTHON_ENV_PATH)/bin/pre-commit uninstall
+
+update-precommit: pip_env
+	@$(PYTHON_ENV_PATH)/bin/pre-commit autoupdate
+
+clean:
+	@rm -rf $(VENV_NAME)
+	@echo "Clean up complete"
 
 precommit:
 	pre-commit run
