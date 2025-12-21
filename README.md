@@ -2,7 +2,8 @@
 
 A command-line tool to split videos into individual frames.
 
-This is not optimized for large video and only intended to be used on short
+This is not optimized for large video and only intended to be used on short clips
+of a few seconds.
 
 
 ## Installation
