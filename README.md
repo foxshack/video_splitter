@@ -2,18 +2,15 @@
 
 A command-line tool to split videos into individual frames.
 
+This is not optimized for large video and only intended to be used on short
+
+
 ## Installation
 
 Install using pipx (recommended):
 
 ```bash
-pipx install .
-```
-
-Or install using pip:
-
-```bash
-pip install .
+pipx install git+https://github.com/mikeh74/video_splitter.git
 ```
 
 ## Usage
@@ -37,11 +34,3 @@ video-splitter my_video.mp4
 
 - Python 3.9 or higher
 - opencv-python
-
-## Development
-
-To install in development mode:
-
-```bash
-pip install -e .
-```

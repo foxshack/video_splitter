@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "video-splitter"
-version = "0.2.0"
+version = "0.2.1"
 description = "A CLI tool to split videos into individual frames"
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
-    {name = "Mike Horrocks", email = "mike.horrocks@hotmail.co.uk"}
+    {name = "Mike Horrocks", email = "mikeh_74_@outlook.com"}
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -30,5 +30,5 @@ dependencies = [
 video-splitter = "splitter_cli.video_splitter:main"
 
 [project.urls]
-Homepage = "https://github.com/yourusername/video_splitter"
-Repository = "https://github.com/yourusername/video_splitter.git"
+Homepage = "https://github.com/mikeh74/video_splitter"
+Repository = "https://github.com/mikeh74/video_splitter.git"
