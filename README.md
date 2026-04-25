@@ -11,7 +11,7 @@ of a few seconds.
 Install using pipx (recommended):
 
 ```bash
-pipx install git+https://github.com/mikeh74/video_splitter.git
+pipx install git+https://github.com/foxshack/video_splitter.git
 ```
 
 ## Usage

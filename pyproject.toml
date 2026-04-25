@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "video-splitter"
-version = "0.2.2"
+dynamic = ["version"]
 description = "A CLI tool to split videos into individual frames"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -32,6 +32,9 @@ video-splitter = "splitter_cli.video_splitter:main"
 [project.urls]
 Homepage = "https://github.com/mikeh74/video_splitter"
 Repository = "https://github.com/mikeh74/video_splitter.git"
+
+[tool.setuptools.dynamic]
+version = {attr = "splitter_cli.__version__"}
 
 [tool.ruff]
 line-length = 100

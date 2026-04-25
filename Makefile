@@ -19,8 +19,8 @@ pip_env:
 	@-echo "PYTHON_ENV is set to $(PYTHON_ENV_PATH)";
 	@-if [ "$(PYTHON_ENV_PATH)" = $(VENV_NAME) ]; then \
 		if [ ! -d "$(PYTHON_ENV_PATH)" ]; then \
-			echo "Virtual environment created."; \
 			python3 -m venv $(VENV_NAME) && $(VENV_NAME)/bin/pip install --upgrade pip; \
+			echo "Virtual environment created."; \
 		fi; \
 	fi
 
