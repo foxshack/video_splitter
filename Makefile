@@ -1,10 +1,11 @@
 # Constants
-VENV_NAME ?= .venv
-PYTHON_ENV_PATH := $(or $(VIRTUAL_ENV), $(VENV_NAME))
+PYTHON_ENV_PATH := .venv
+PYTHON := $(PYTHON_ENV_PATH)/bin/python
 PRECOMMIT = $(PYTHON_ENV_PATH)/bin/pre-commit
 
 # Targets
-.PHONY: help install-precommit uninstall-precommit update-precommit precommit precommit-all
+.PHONY: help install-precommit uninstall-precommit update-precommit \
+	precommit precommit-all test test-cov clean
 
 help:
 	@echo "Available commands:"
@@ -13,34 +14,53 @@ help:
 	@echo "  make update-precommit     - Update pre-commit hooks to latest versions"
 	@echo "  make precommit            - Run pre-commit on staged files"
 	@echo "  make precommit-all        - Run pre-commit on all files"
+	@echo "  make test                 - Run unit tests"
+	@echo "  make test-cov             - Run tests with coverage report"
 
-pip_env:
-	@# check if PYTHON_ENV = $(VENV_NAME) and if it is then check whether the directory exists
-	@-echo "PYTHON_ENV is set to $(PYTHON_ENV_PATH)";
-	@-if [ "$(PYTHON_ENV_PATH)" = $(VENV_NAME) ]; then \
-		if [ ! -d "$(PYTHON_ENV_PATH)" ]; then \
-			python3 -m venv $(VENV_NAME) && $(VENV_NAME)/bin/pip install --upgrade pip; \
-			echo "Virtual environment created."; \
-		fi; \
+.venv:
+	@if [ ! -d "$(PYTHON_ENV_PATH)" ]; then \
+		python3 -m venv $(PYTHON_ENV_PATH); \
+		$(PYTHON_ENV_PATH)/bin/pip install --upgrade pip; \
+		$(PYTHON_ENV_PATH)/bin/pip install build; \
+		echo "Virtual environment created."; \
 	fi
 
-install-precommit: pip_env
+install-precommit: .venv
 	@$(PYTHON_ENV_PATH)/bin/pip install pre-commit
 	@$(PYTHON_ENV_PATH)/bin/pre-commit install
 	@echo "Pre-commit installed"
 
-uninstall-precommit: pip_env
+uninstall-precommit: .venv
 	@$(PYTHON_ENV_PATH)/bin/pre-commit uninstall
 
-update-precommit: pip_env
+update-precommit: .venv
 	@$(PYTHON_ENV_PATH)/bin/pre-commit autoupdate
 
-clean:
-	@rm -rf $(VENV_NAME)
-	@echo "Clean up complete"
+build: .venv
+	$(PYTHON) -m build
+
+test: .venv
+	@echo "Installing test dependencies..."
+	@$(PYTHON_ENV_PATH)/bin/pip install -e ".[dev]" > /dev/null 2>&1
+	@echo "Running tests..."
+	@$(PYTHON_ENV_PATH)/bin/pytest -v
+
+test-cov: .venv
+	@echo "Installing test dependencies..."
+	@$(PYTHON_ENV_PATH)/bin/pip install -e ".[dev]" > /dev/null 2>&1
+	@echo "Running tests with coverage..."
+	@$(PYTHON_ENV_PATH)/bin/pytest --cov=splitter_cli --cov-report=html --cov-report=term-missing -v
+	@echo ""
+	@echo "Coverage report generated in htmlcov/index.html"
 
 precommit:
 	pre-commit run
 
 precommit-all:
 	pre-commit run --all-files
+
+clean:
+	@echo "Cleaning up..."
+	@rm -rf build dist *.egg-info
+	@rm -rf $(PYTHON_ENV_PATH)
+	@echo "Clean up complete"

@@ -22,14 +22,16 @@ def create_file_path(path):
     head, tail = os.path.split(path)
     filename, extension = os.path.splitext(tail)
 
-    filename = "{}_{}".format(filename, "frames")
+    filename = f"{filename}_{ 'frames' }"
 
     return os.path.join(os.path.dirname(path), filename)
 
 
 def splitter(path):
-    if os.path.exists(path):
-        dir = create_file_path(path)
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Video file not found: {path}")
+
+    dir = create_file_path(path)
 
     if not os.path.exists(dir):
         os.mkdir(dir)
